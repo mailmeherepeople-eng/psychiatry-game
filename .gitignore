@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output
+www/
+
+# Secrets and env
+.env
+.env.local
+.env.*.local
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Capacitor / Android build artifacts
+android/app/build/
+android/.gradle/
+android/build/
+android/local.properties
+android/capacitor-cordova-android-plugins/
+android/app/release/
+
+# iOS build artifacts (for later)
+ios/App/build/
+ios/App/Pods/
+ios/App/output/
+
+# Claude Code local settings (the ones not meant to be shared)
+.claude/settings.local.json
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
