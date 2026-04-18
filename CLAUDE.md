@@ -240,12 +240,25 @@ Doctor turned indie game developer. Runs Git Gud solo. Prefers terse communicati
 
 ## Current status
 
-Pre-development. Scaffold phase complete:
+Scaffold phase complete. Claude Code + permissions configured. Paused mid-MCP setup.
 
+**Done:**
 - Capacitor initialised (`com.gitgud.jungianslip`)
 - Android platform added
 - Dev server working on localhost:3000
-- Git history clean, `.gitignore` in place
+- `.gitignore` clean
 - ntfy notifications wired and tested
+- CLAUDE.md committed
+- Claude Code installed, logged in via Max plan, reads CLAUDE.md correctly
+- `.claude/settings.json` committed with allow/deny permissions tested
 
-Next: Claude Code install → `.claude/settings.json` → `.mcp.json` (Supabase + Playwright) → first skill (`/skill-creator`).
+**In progress: MCP setup (step 6)**
+- Next action: create Supabase project named `jungian-slip` on supabase.com
+- Then: generate Personal Access Token, grab Project Reference ID
+- Then: put `SUPABASE_ACCESS_TOKEN` and `SUPABASE_PROJECT_REF` in `.env`
+- Then: write `.mcp.json` to wire Supabase MCP (write-enabled, scoped to this project) and Playwright MCP
+- Then: test MCP tools work in Claude Code
+
+**Blocked on:** nothing, just picking back up tomorrow.
+
+**Next after MCP:** build the case-authoring skill using `/skill-creator` inside Claude Code.
