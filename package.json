@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/mailmeherepeople-eng/psychiatry-game#readme",
   "dependencies": {
+    "@capacitor/android": "^8.3.1",
     "@capacitor/core": "^8.3.1"
   },
   "devDependencies": {

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Jungian Slip</string>
+    <string name="title_activity_main">Jungian Slip</string>
+    <string name="package_name">com.gitgud.jungianslip</string>
+    <string name="custom_url_scheme">com.gitgud.jungianslip</string>
+</resources>
