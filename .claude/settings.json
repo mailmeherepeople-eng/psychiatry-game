@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Write(src/**)",
+      "Write(CLAUDE.md)",
+      "Write(.claude/**)",
+      "Write(package.json)",
+      "Write(.gitignore)",
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(npx cap *)",
+      "Bash(npx playwright *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(dir *)",
+      "Bash(dir)",
+      "Bash(curl.exe *)"
+    ],
+    "deny": [
+      "Bash(rm *)",
+      "Bash(Remove-Item *)",
+      "Bash(del *)",
+      "Bash(git push *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean *)",
+      "Write(.env)",
+      "Write(.env.*)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Write(www/**)",
+      "Write(android/**)",
+      "Write(node_modules/**)"
+    ]
+  }
+}
