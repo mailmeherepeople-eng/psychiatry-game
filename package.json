@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "psychiatry game pheonix wright",
   "main": "index.js",
-  "scripts": {
+"scripts": {
+  "start": "powershell -ExecutionPolicy Bypass -File scripts/start.ps1",
   "dev": "http-server src -p 3000 -c-1 -o",
   "copy": "xcopy src\\* www\\ /E /I /Y",
   "sync": "npm run copy && npx cap sync",
