@@ -232,6 +232,18 @@ Then stop. Do not start the next task unprompted.
 
 ---
 
+## Database rules
+
+The agent has write access to the Supabase project `jungian-slip` via MCP. With that power come rules:
+
+1. **Migration files over ad-hoc SQL.** Any schema change creates a file in `supabase/migrations/` with a timestamp and a description. The file is the source of truth. Running raw SQL directly is only for reads and for experimenting — never for durable changes.
+2. **No destructive operations without explicit approval.** `DROP`, `TRUNCATE`, and `DELETE` without a `WHERE` clause must be presented to Kuroi as SQL text first. Agent waits for "approved" before running.
+3. **Always test on one row first.** Before running an `UPDATE` or `DELETE` on many rows, agent runs the same query with `LIMIT 1` and shows the result.
+4. **Production is off-limits.** This project is `jungian-slip` (dev). When we add `jungian-slip-prod` later, the agent has no access to it. Kuroi promotes migrations to prod manually.
+5. **Never expose credentials.** Agent does not read or print the contents of `.env`. Agent does not echo the `SUPABASE_ACCESS_TOKEN`, the service role key, or any other secret to the terminal.
+
+---
+
 ## About Kuroi
 
 Doctor turned indie game developer. Runs Git Gud solo. Prefers terse communication, complete deliverables, demo before commit, decisions before code. Handles vision, taste, and clinical validation. Claude handles creative drafting, execution, and verification.
