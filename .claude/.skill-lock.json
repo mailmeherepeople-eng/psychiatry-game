@@ -1,0 +1,86 @@
+{
+  "version": 3,
+  "skills": {
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-07T20:44:51.724Z",
+      "updatedAt": "2026-04-07T20:44:51.724Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "installedAt": "2026-04-07T20:44:57.481Z",
+      "updatedAt": "2026-04-07T20:44:57.481Z"
+    },
+    "ai-image-generation": {
+      "source": "inferen-sh/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/inferen-sh/skills.git",
+      "skillPath": "tools/image/ai-image-generation/SKILL.md",
+      "skillFolderHash": "fee6d5152110ab70736bbcc1151f0a32e1af9532",
+      "installedAt": "2026-04-07T20:46:41.497Z",
+      "updatedAt": "2026-04-07T20:46:41.497Z"
+    },
+    "game-development": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/sickn33/antigravity-awesome-skills.git",
+      "skillPath": "skills/game-development/SKILL.md",
+      "skillFolderHash": "43c12381e1fc796ede8471b42e0680b027d61459",
+      "installedAt": "2026-04-07T20:52:14.911Z",
+      "updatedAt": "2026-04-07T20:52:14.911Z"
+    },
+    "game-engine": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/github/awesome-copilot.git",
+      "skillPath": "skills/game-engine/SKILL.md",
+      "skillFolderHash": "4a6c98d412aabc984e1cb7f18f475a7a5f645d46",
+      "installedAt": "2026-04-07T20:52:54.630Z",
+      "updatedAt": "2026-04-07T20:52:54.630Z"
+    },
+    "multiplayer-game": {
+      "source": "rivet-dev/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/rivet-dev/skills.git",
+      "skillPath": "multiplayer-game/SKILL.md",
+      "skillFolderHash": "18244ad1799079e050f29854c6245e110fbf6894",
+      "installedAt": "2026-04-07T20:54:41.859Z",
+      "updatedAt": "2026-04-07T20:54:41.859Z"
+    },
+    "game-assets": {
+      "source": "opusgamelabs/game-creator",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/opusgamelabs/game-creator.git",
+      "skillPath": "skills/game-assets/SKILL.md",
+      "skillFolderHash": "8616974be13a2f738fe661dcaaceb617ed699ecf",
+      "installedAt": "2026-04-07T20:55:10.024Z",
+      "updatedAt": "2026-04-07T20:55:10.024Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "firebender",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-cli",
+    "opencode",
+    "warp"
+  ]
+}
