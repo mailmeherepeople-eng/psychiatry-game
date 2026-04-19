@@ -1,0 +1,50 @@
+[data-screen="title"] {
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at top, rgba(58, 123, 123, 0.08), transparent 60%),
+    radial-gradient(ellipse at bottom, rgba(161, 62, 62, 0.04), transparent 50%),
+    var(--bg);
+}
+
+.title-inner {
+  text-align: center;
+  padding: 24px;
+  max-width: 480px;
+}
+
+.title-wordmark {
+  font-family: var(--font-serif);
+  font-size: clamp(48px, 9vw, 88px);
+  font-weight: 500;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.title-tagline {
+  font-size: 16px;
+  color: var(--ink-soft);
+  margin: 0 0 40px 0;
+}
+
+.title-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.title-actions .btn {
+  padding: 14px 24px;
+  font-size: 16px;
+}
+
+.title-footer {
+  margin-top: 48px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}

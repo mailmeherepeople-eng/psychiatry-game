@@ -1,0 +1,207 @@
+[data-screen="game"] {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.game-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(244, 241, 236, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+.patient-name {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rapport {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+}
+.rapport-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.rapport-value {
+  font-weight: 600;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  min-width: 18px;
+  text-align: right;
+}
+.rapport-value.rapport-positive { color: var(--good); }
+.rapport-value.rapport-negative { color: var(--bad); }
+
+/* Stage — silhouette area */
+.game-stage {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 32px 24px 16px 24px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.patient-portrait {
+  position: relative;
+  width: min(340px, 70vw);
+  aspect-ratio: 3 / 4;
+  max-height: 52vh;
+}
+
+.portrait-silhouette {
+  position: absolute;
+  inset: 0;
+  background: var(--patient-color, #6b7a99);
+  border-radius: 180px 180px 24px 24px;
+  box-shadow: var(--shadow-lg);
+  transition: background var(--t-smooth);
+}
+.portrait-silhouette::before {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  width: 38%;
+  aspect-ratio: 1;
+  background: inherit;
+  filter: brightness(0.92);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+/* Dialogue */
+.dialogue-area {
+  padding: 0 20px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dialogue-box {
+  position: relative;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 22px 30px 22px;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  min-height: 108px;
+  transition: border-color var(--t-quick);
+}
+.dialogue-box:hover { border-color: var(--border-strong); }
+
+.speaker {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+
+.line-text {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  min-height: 1.55em;
+}
+
+.tap-hint {
+  position: absolute;
+  right: 14px;
+  bottom: 8px;
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  opacity: 0;
+  animation: tapBlink 1.8s ease-in-out infinite;
+}
+.dialogue-box.line-done .tap-hint { opacity: 0.8; }
+
+@keyframes tapBlink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.9; }
+}
+
+/* Snippet capture flash */
+.snippet-flash {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  animation: snippetPop var(--t-smooth) both;
+}
+@keyframes snippetPop {
+  0% { transform: scale(0.6) translateY(-8px); opacity: 0; }
+  60% { transform: scale(1.04) translateY(0); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Choices */
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fadeIn var(--t-smooth) both;
+}
+.choices[hidden] { display: none; }
+
+.choice {
+  text-align: left;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background var(--t-quick), border-color var(--t-quick), transform var(--t-quick);
+}
+.choice:hover {
+  border-color: var(--accent);
+  background: #fbfaf7;
+  transform: translateX(2px);
+}
+.choice:active { transform: translateX(0); }
+
+/* Typewriter cursor */
+.type-cursor {
+  display: inline-block;
+  width: 0.5ch;
+  background: var(--ink);
+  margin-left: 2px;
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}

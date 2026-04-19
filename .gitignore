@@ -37,3 +37,9 @@ ios/App/output/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Playwright MCP session artifacts
+.playwright-mcp/
+
+# Milestone verification screenshots (ephemeral)
+m[0-9]*-*.png

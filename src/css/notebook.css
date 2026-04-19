@@ -1,0 +1,49 @@
+[data-screen="notebook"] {
+  background: var(--bg);
+}
+
+.nb-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+.nb-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.nb-body {
+  flex: 1;
+  padding: 24px 20px;
+  overflow-y: auto;
+}
+
+.nb-empty {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 15px;
+  margin-top: 80px;
+  font-style: italic;
+}
+
+.nb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nb-list:empty { display: none; }
+
+.nb-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-alt);
+  display: flex;
+  justify-content: flex-end;
+}

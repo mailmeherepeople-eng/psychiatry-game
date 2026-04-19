@@ -1,0 +1,117 @@
+[data-screen="mind-palace"] {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(114, 130, 168, 0.14), transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(170, 150, 192, 0.12), transparent 55%),
+    linear-gradient(180deg, #eceaf0 0%, #dfdee6 100%);
+}
+
+.mp-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  z-index: 10;
+}
+
+.mp-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.mp-hint {
+  flex: 1;
+  font-size: 13px;
+  color: var(--ink-soft);
+  opacity: 0.85;
+}
+
+.mp-canvas {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.mp-clusters-layer,
+.mp-cards-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.mp-cards-layer { pointer-events: none; }
+.mp-cards-layer .mp-card { pointer-events: auto; }
+
+/* Cluster halo — soft radial background behind grouped cards */
+.mp-cluster {
+  position: absolute;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(214, 231, 230, 0.55) 40%,
+    rgba(214, 231, 230, 0) 75%
+  );
+  filter: blur(2px);
+  transition: all var(--t-smooth);
+  pointer-events: none;
+}
+
+/* Card */
+.mp-card {
+  position: absolute;
+  width: 220px;
+  padding: 14px 16px;
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(30, 36, 48, 0.06);
+  cursor: grab;
+  transition: box-shadow var(--t-quick), transform var(--t-quick);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.mp-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+.mp-card.dragging {
+  cursor: grabbing;
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.03);
+  z-index: 100;
+  transition: none;
+}
+.mp-card.in-cluster {
+  border-color: rgba(58, 123, 123, 0.25);
+}
+
+.mp-card-quote {
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.mp-card-meta {
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.mp-empty-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: center;
+  opacity: 0.7;
+}
+.mp-empty-hint[hidden] { display: none; }

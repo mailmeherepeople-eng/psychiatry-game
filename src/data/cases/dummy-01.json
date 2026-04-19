@@ -1,0 +1,81 @@
+{
+  "id": "dummy-01",
+  "title": "The Wandering Intern",
+  "patient": {
+    "name": "Alex Morgan",
+    "silhouetteColor": "#6b7a99"
+  },
+  "startNode": "n1",
+  "snippets": {
+    "s1": { "id": "s1", "text": "My manager Priya said I had to come." },
+    "s2": { "id": "s2", "text": "Something about me staying late." },
+    "s3": { "id": "s3", "text": "I've been ordering dinner to my desk." },
+    "s4": { "id": "s4", "text": "Last Tuesday I didn't leave until the cleaners came in." },
+    "s5": { "id": "s5", "text": "I'm the lead on the rebrand." },
+    "s6": { "id": "s6", "text": "Then Marcus left, and they decided not to replace him." },
+    "s7": { "id": "s7", "text": "I could have said no. I didn't." }
+  },
+  "nodes": {
+    "n1": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "I don't know why I'm here, exactly." },
+        { "text": "My manager Priya said I had to come.", "snippet": "s1" },
+        { "text": "Something about me staying late.", "snippet": "s2" }
+      ],
+      "choices": [
+        { "id": "c1", "text": "Tell me about the late nights.", "next": "n2", "rapport": 1 },
+        { "id": "c2", "text": "Priya sounds concerned about you.", "next": "n2", "rapport": 1 },
+        { "id": "c3", "text": "So you're not here by choice.", "next": "n2", "rapport": -1 }
+      ]
+    },
+    "n2": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "It's nothing dramatic. The deadline got moved up. Twice." },
+        { "text": "I've been ordering dinner to my desk.", "snippet": "s3" },
+        { "text": "Last Tuesday I didn't leave until the cleaners came in.", "snippet": "s4" }
+      ],
+      "choices": [
+        { "id": "c1", "text": "What are you working on that's so heavy?", "next": "n3", "rapport": 1 },
+        { "id": "c2", "text": "Do you ever eat with anyone during the day?", "next": "n3", "rapport": 1 },
+        { "id": "c3", "text": "That sounds exhausting.", "next": "n3", "rapport": 0 },
+        { "id": "c4", "text": "You chose to stay, right?", "next": "n3", "rapport": -1 }
+      ]
+    },
+    "n3": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "I'm the lead on the rebrand.", "snippet": "s5" },
+        { "text": "It was supposed to be a three-person team." },
+        { "text": "Then Marcus left, and they decided not to replace him.", "snippet": "s6" },
+        { "text": "I could have said no. I didn't.", "snippet": "s7" }
+      ],
+      "choices": [
+        { "id": "c1", "text": "Why didn't you say no?", "next": "end_good", "rapport": 2 },
+        { "id": "c2", "text": "Sounds like you wanted to prove something.", "next": "end_good", "rapport": 1 },
+        { "id": "c3", "text": "That was a mistake on your part.", "next": "end_bad", "rapport": -3 }
+      ]
+    },
+    "end_good": {
+      "speaker": "narration",
+      "lines": [
+        { "text": "Alex leans back. The shoulders drop half an inch." },
+        { "text": "\"I didn't want to let them down. Even Marcus, and he's gone.\"" },
+        { "text": "They look at you, properly, for the first time." },
+        { "text": "\"Can we do this again next week?\"" }
+      ],
+      "ending": { "id": "working_alliance", "name": "Working Alliance" }
+    },
+    "end_bad": {
+      "speaker": "narration",
+      "lines": [
+        { "text": "Alex's jaw tightens." },
+        { "text": "\"Look, I didn't come here to be lectured.\"" },
+        { "text": "They check their phone. They don't put it down." },
+        { "text": "The rest of the hour is very quiet." }
+      ],
+      "ending": { "id": "session_stalled", "name": "Session Stalled" }
+    }
+  }
+}
