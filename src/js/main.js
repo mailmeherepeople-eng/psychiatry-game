@@ -21,7 +21,7 @@ async function boot() {
     const player = await ensurePlayer(supabase, state.anonId);
     state.playerId = player.id;
 
-    const caseData = await loadCase('dummy-01');
+    const caseData = await loadCase('case-01-gad-tutorial');
     state.caseData = caseData;
     state.caseId = caseData.id;
     // Mirror case content into Supabase (idempotent upsert).

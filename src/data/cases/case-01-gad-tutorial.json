@@ -1,0 +1,338 @@
+{
+  "id": "case-01-gad-tutorial",
+  "title": "Maya Nair and the 11pm Replay",
+  "patient": {
+    "name": "Maya Nair",
+    "silhouetteColor": "#9ba5b3"
+  },
+  "startNode": "scene_open",
+  "snippets": {
+    "s1": { "id": "s1", "text": "My brain is just replaying everything." },
+    "s2": { "id": "s2", "text": "It's been happening since April." },
+    "s3": { "id": "s3", "text": "I'm awake at eleven, or three, or both." },
+    "s4": { "id": "s4", "text": "Every email I sent. Everything I might have done wrong." },
+    "s5": { "id": "s5", "text": "What Anjali will say if I'm late again." },
+    "s6": { "id": "s6", "text": "What if I'm not good enough for placements." },
+    "s7": { "id": "s7", "text": "My chest gets tight. Like I can't pull a full breath." },
+    "s8": { "id": "s8", "text": "My hands go kind of numb sometimes." },
+    "s9": { "id": "s9", "text": "I dropped two of my tutoring kids last week." },
+    "s10": { "id": "s10", "text": "I left a paper half-done because I couldn't focus." }
+  },
+  "nodes": {
+    "scene_open": {
+      "speaker": "narration",
+      "lines": [
+        { "text": "She is already seated when you walk in." },
+        { "text": "Phone face-down on her lap. Hair tied back. A polite half-smile, and then she is looking at the window." },
+        { "text": "Somewhere in the ceiling a fluorescent light is humming in a key nobody can name." }
+      ],
+      "choices": [
+        { "id": "continue", "text": "Sit down.", "next": "opening", "rapport": 0 }
+      ]
+    },
+
+    "opening": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "Hi. Um." },
+        { "text": "Sorry, I don't really know how this works." },
+        { "text": "Is it okay if I just... talk?" }
+      ],
+      "choices": [
+        { "id": "take_your_time", "text": "Of course. Take your time.", "next": "warmup", "rapport": 1 },
+        { "id": "what_brought_you", "text": "Tell me what brought you in today.", "next": "warmup", "rapport": 0 },
+        { "id": "named_too_early", "text": "You sound nervous. That's okay.", "next": "warmup", "rapport": -1 },
+        { "id": "nod_silent", "text": "Nod, and stay quiet.", "next": "warmup", "rapport": 1 }
+      ]
+    },
+
+    "warmup": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "Okay. Um." },
+        { "text": "So my friend Anjali, she's the one who told me to come." },
+        { "text": "I didn't... I mean, I don't think anything's wrong exactly. I just haven't been sleeping." },
+        { "text": "Like, at all. Well, I sleep. But it's... not sleep." }
+      ],
+      "choices": [
+        { "id": "not_sleep", "text": "Not sleep. What does that mean for you?", "next": "sleep_detail", "rapport": 1 },
+        { "id": "when_start", "text": "When did this start?", "next": "sleep_detail", "rapport": 0 },
+        { "id": "anjali_notice", "text": "What does Anjali notice that you might not?", "next": "sleep_detail", "rapport": 1 },
+        { "id": "played_expert", "text": "Okay, we can probably fix this with better sleep hygiene.", "next": "sleep_detail", "rapport": -2 }
+      ]
+    },
+
+    "sleep_detail": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "It's like my body is sleeping." },
+        { "text": "But my brain is just replaying everything.", "snippet": "s1" },
+        { "text": "Every conversation I had that day. Every email I sent. Everything I might have done wrong. It just loops." },
+        { "text": "It's been happening since April? Maybe before.", "snippet": "s2" },
+        { "text": "I'm awake at eleven, or three, or both.", "snippet": "s3" }
+      ],
+      "choices": [
+        { "id": "continue", "text": "Let her keep going.", "next": "brain_loops", "rapport": 0 },
+        { "id": "exhausting", "text": "That sounds exhausting.", "next": "brain_loops", "rapport": 1 },
+        { "id": "every_email", "text": "Every email. That's a lot of replay.", "next": "brain_loops", "rapport": 1 }
+      ]
+    },
+
+    "brain_loops": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "I keep thinking, what if I sent it too casual. What if the reply comes tomorrow and it's bad." },
+        { "text": "Every email I sent. Everything I might have done wrong.", "snippet": "s4" },
+        { "text": "And then what Anjali will say if I'm late again.", "snippet": "s5" },
+        { "text": "And then my tutoring families. And then I'm back to the emails." }
+      ],
+      "choices": [
+        { "id": "one_worry", "text": "Is there one worry that comes up more than the others?", "next": "function_probe", "rapport": 0 },
+        { "id": "does_it_stop", "text": "When your mind loops like that, does it ever stop?", "next": "function_probe", "rapport": 1 },
+        { "id": "body_ask", "text": "What happens in your body when this is happening?", "next": "function_probe", "rapport": 1 },
+        { "id": "not_think", "text": "Have you tried not thinking about it?", "next": "function_probe", "rapport": -2 }
+      ]
+    },
+
+    "function_probe": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "It's affecting things." },
+        { "text": "I dropped two of my tutoring kids last week.", "snippet": "s9" },
+        { "text": "I couldn't face telling their parents in person. I did it over WhatsApp." },
+        { "text": "I'm behind on a project submission." },
+        { "text": "I left a paper half-done because I just... couldn't focus on it.", "snippet": "s10" },
+        { "text": "I don't know. I feel like I'm the kind of person who doesn't do this." }
+      ],
+      "choices": [
+        { "id": "kind_of_person", "text": "What does 'the kind of person who does this' look like to you?", "next": "physical_symptoms", "rapport": 1 },
+        { "id": "used_to_coping", "text": "That must be hard when you're used to coping.", "next": "physical_symptoms", "rapport": 1 },
+        { "id": "responsible", "text": "Dropping the tutoring sounds responsible, actually.", "next": "physical_symptoms", "rapport": 0 },
+        { "id": "parents_early", "text": "How are your parents taking it?", "next": "physical_symptoms", "rapport": 0 }
+      ]
+    },
+
+    "physical_symptoms": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "There's this..." },
+        { "text": "My chest gets tight. Like I can't pull a full breath.", "snippet": "s7" },
+        { "text": "Mostly when I'm checking my inbox." },
+        { "text": "My hands go kind of numb sometimes.", "snippet": "s8" },
+        { "text": "I thought it was like a heart thing, so I looked it up. The internet was not helpful." }
+      ],
+      "choices": [
+        { "id": "continue", "text": "Let the moment breathe.", "next": "trigger_branch", "rapport": 0 },
+        { "id": "three_am", "text": "Looking it up at three AM is a special kind of hell.", "next": "trigger_branch", "rapport": 1 },
+        { "id": "heart_checked", "text": "Have you had anyone check your heart?", "next": "trigger_branch", "rapport": 0 }
+      ]
+    },
+
+    "trigger_branch": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "I don't know why I'm like this." },
+        { "text": "It's not like I have big problems." },
+        { "text": "Some people have actual things going wrong. I just have... the usual things. Placements. My mum. The usual things." }
+      ],
+      "choices": [
+        { "id": "placements", "text": "Tell me about placements.", "next": "academic_beat_1", "rapport": 0 },
+        { "id": "mum", "text": "Tell me about your mum.", "next": "family_beat_1", "rapport": 0 },
+        { "id": "caught_min", "text": "You said 'some people have actual things.' What counts as actual?", "next": "minimization_insight", "rapport": 1 },
+        { "id": "stressed_exams", "text": "You're probably just stressed about exams.", "next": "uncomfortable", "rapport": -3 }
+      ]
+    },
+
+    "academic_beat_1": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "Placement season started in April. Everyone's got a plan. I don't." },
+        { "text": "My CGPA is fine but that's not enough now." },
+        { "text": "And I keep thinking, what if I freeze in an interview." },
+        { "text": "What if I'm not good enough for placements.", "snippet": "s6" },
+        { "text": "And I end up sitting at home while everyone else is... you know." }
+      ],
+      "choices": [
+        { "id": "sitting_at_home", "text": "What would that mean to you? Sitting at home.", "next": "academic_beat_2", "rapport": 1 },
+        { "id": "had_interview", "text": "Have you had an interview yet?", "next": "academic_beat_2", "rapport": 0 }
+      ]
+    },
+
+    "academic_beat_2": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "One. Last week." },
+        { "text": "I don't know how it went. I keep replaying it." },
+        { "text": "They asked me about teamwork and I said this thing about group projects and I don't know if it landed." },
+        { "text": "I've been checking my email since Thursday." }
+      ],
+      "choices": [
+        { "id": "continue", "text": "Say nothing.", "next": "trigger_merge", "rapport": 0 },
+        { "id": "four_day_marathon", "text": "Checking your email for four days is its own kind of marathon.", "next": "trigger_merge", "rapport": 1 }
+      ]
+    },
+
+    "family_beat_1": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "My mum is... she's fine. She's kind. She worries." },
+        { "text": "My dad doesn't say much." },
+        { "text": "He didn't speak to my brother for like a week when he dropped a year." },
+        { "text": "I think about that sometimes." }
+      ],
+      "choices": [
+        { "id": "what_you_think", "text": "What do you think about when you think about that?", "next": "family_beat_2", "rapport": 1 },
+        { "id": "mum_knows", "text": "Does your mum know you're here today?", "next": "family_beat_2", "rapport": 0 }
+      ]
+    },
+
+    "family_beat_2": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "I haven't told her." },
+        { "text": "I just think... I'm the one who doesn't drop anything." },
+        { "text": "That's my whole thing." },
+        { "text": "I'm not allowed to." }
+      ],
+      "choices": [
+        { "id": "continue", "text": "Stay with the silence.", "next": "trigger_merge", "rapport": 0 },
+        { "id": "nobody_tells_you", "text": "Nobody tells you that out loud, do they.", "next": "trigger_merge", "rapport": 1 }
+      ]
+    },
+
+    "minimization_insight": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "I don't know." },
+        { "text": "Actual things are like, cancer. Or someone died. Or you didn't have food growing up." },
+        { "text": "I had food. I have a BCom seat. I don't get to be sitting here." }
+      ],
+      "choices": [
+        { "id": "here_though", "text": "You're here though. What brought you past that thought?", "next": "trigger_merge", "rapport": 1 },
+        { "id": "no_permission", "text": "Being here doesn't require permission from how bad it is.", "next": "trigger_merge", "rapport": 1 },
+        { "id": "back_to_placements", "text": "Tell me about placements.", "next": "academic_beat_1", "rapport": 0 }
+      ]
+    },
+
+    "trigger_merge": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "Sorry. I haven't actually talked about any of this to anyone." },
+        { "text": "It feels weird to hear it out loud." }
+      ],
+      "choices": [
+        { "id": "supposed_to", "text": "It's supposed to feel weird. That means it's working.", "next": "safety_check", "rapport": 1 },
+        { "id": "take_your_time", "text": "Take your time.", "next": "safety_check", "rapport": 1 },
+        { "id": "harder_q", "text": "Let me ask you a harder question.", "next": "safety_check", "rapport": 0 }
+      ]
+    },
+
+    "safety_check": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "I... no. No, nothing like that." },
+        { "text": "I just want to sleep." },
+        { "text": "I get frustrated with myself for not being able to, like, get it together. But not... not that." }
+      ],
+      "choices": [
+        { "id": "thanks_honest", "text": "Thanks for being honest with me about that.", "next": "mood_screen", "rapport": 1 },
+        { "id": "even_briefly", "text": "Have you ever felt that way, even briefly?", "next": "mood_screen", "rapport": 0 },
+        { "id": "people_around", "text": "Do you have people around you?", "next": "mood_screen", "rapport": 1 }
+      ]
+    },
+
+    "mood_screen": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "I mean, I'm tired all the time, yeah. Food is whatever." },
+        { "text": "I'm not... sad, exactly?" },
+        { "text": "Like I can still laugh at things with Anjali." },
+        { "text": "I went to a wedding two weeks ago and I actually had fun, for like three hours." },
+        { "text": "I think I'm just wound." }
+      ],
+      "choices": [
+        { "id": "wound", "text": "Wound. That's a good word for it.", "next": "diagnostic_framing", "rapport": 1 },
+        { "id": "tired_kind", "text": "When you say tired, do you mean sleepy tired or can't-get-up tired?", "next": "diagnostic_framing", "rapport": 1 },
+        { "id": "what_enjoy", "text": "What do you enjoy, when your brain isn't looping?", "next": "diagnostic_framing", "rapport": 1 }
+      ]
+    },
+
+    "diagnostic_framing": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "So." },
+        { "text": "What is it." },
+        { "text": "Is something wrong with me." }
+      ],
+      "choices": [
+        { "id": "name_anxiety", "text": "What you're describing is anxiety. The kind that runs constantly in the background. It's very common and it's treatable.", "next": "ending_correct_gad", "rapport": 0 },
+        { "id": "call_it_depression", "text": "It sounds like you might be depressed. I'd like to talk about that.", "next": "ending_missed_mdd", "rapport": 0 },
+        { "id": "rule_out_physical", "text": "I'd want to rule out some physical things before giving this a name.", "next": "ending_correct_gad", "rapport": -1 },
+        { "id": "stressed_pass", "text": "Honestly, I think you're stressed about exams. It'll pass.", "next": "ending_walkout", "rapport": -4 }
+      ]
+    },
+
+    "uncomfortable": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "Maybe. Yeah." },
+        { "text": "Um. Sorry, I think I'm wasting your time." },
+        { "text": "This was... a bad idea." },
+        { "text": "I'll figure it out." }
+      ],
+      "choices": [
+        { "id": "please_stay", "text": "Please stay. I hear I just missed it. Can I try again?", "next": "trigger_branch", "rapport": 2 },
+        { "id": "not_waste", "text": "I don't think this is a waste of time. Sit with me another minute.", "next": "trigger_branch", "rapport": 1 },
+        { "id": "let_her_go", "text": "Okay. Think about coming back.", "next": "ending_walkout", "rapport": 0 }
+      ]
+    },
+
+    "ending_correct_gad": {
+      "speaker": "patient",
+      "lines": [
+        { "text": "Anxiety. Okay." },
+        { "text": "That actually... that makes sense." },
+        { "text": "I think I'd been making up worse things in my head." },
+        { "text": "What do I do with it?" }
+      ],
+      "choices": [
+        { "id": "explain_plan", "text": "Walk her through the plan.", "next": "ending_correct_gad_wrap", "rapport": 0 }
+      ]
+    },
+
+    "ending_correct_gad_wrap": {
+      "speaker": "narration",
+      "lines": [
+        { "text": "You talk her through it. A trial of a low dose SSRI if she is open to it. A cognitive therapy referral. Sleep hygiene that doesn't pretend this is just about sleep." },
+        { "text": "She nods through it. When you're done, she picks up the phone, and puts it in her bag." },
+        { "text": "\"Same time next week?\"" }
+      ],
+      "ending": { "id": "ending_correct_gad", "name": "Named and Held" }
+    },
+
+    "ending_missed_mdd": {
+      "speaker": "narration",
+      "lines": [
+        { "text": "Maya agrees politely." },
+        { "text": "She stopped pushing back two questions ago." },
+        { "text": "She leaves with a prescription and a follow-up card." },
+        { "text": "She will take the medication. It may even help." },
+        { "text": "But she walks out still believing her worry is just who she is." },
+        { "text": "At 3 AM her brain will replay every email again." }
+      ],
+      "ending": { "id": "ending_missed_mdd", "name": "Close, Not Right" }
+    },
+
+    "ending_walkout": {
+      "speaker": "narration",
+      "lines": [
+        { "text": "\"Yeah, okay. Thank you for your time.\"" },
+        { "text": "She is already standing. The phone is in her hand." },
+        { "text": "At reception, she does not book another appointment." },
+        { "text": "Anjali will ask how it went. Maya will say it was fine." },
+        { "text": "She will not come back this year." }
+      ],
+      "ending": { "id": "ending_walkout", "name": "She Left" }
+    }
+  }
+}
