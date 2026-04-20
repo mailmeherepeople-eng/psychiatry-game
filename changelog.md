@@ -37,3 +37,4 @@ Rule (see CLAUDE.md → Workflow → Changelog): every assistant response append
 - 2026-04-21 01:05 — Playwright audit at 667×375: walked reception → kitchen, bumped into break table; green rect stopped exactly at red footprint edge. Collision rule confirmed correct.
 - 2026-04-21 01:10 — Updated CLAUDE.md: `Last updated: 2026-04-21 (v4)`; status section rewritten to include M2 work (intro, roam, sprites, exit, mobile, collision, 3D); added Changelog rule to Workflow section.
 - 2026-04-21 01:15 — Created this file (`changelog.md`) at repo root and seeded with the backlog above.
+- 2026-04-21 01:20 — End-of-day summary to Kuroi: nothing committed, Case 01 content unchanged, debug flag off by default, Priya's head grazes reception desk edge (flagged for per-scene tuning later), auto-append rule now live.
