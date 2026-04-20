@@ -1,5 +1,11 @@
 {
   "appId": "com.gitgud.jungianslip",
   "appName": "Jungian Slip",
-  "webDir": "www"
+  "webDir": "www",
+  "android": {
+    "orientation": "landscape"
+  },
+  "ios": {
+    "orientation": "landscape"
+  }
 }

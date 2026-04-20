@@ -6,6 +6,8 @@
   <title>Jungian Slip</title>
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/title.css">
+  <link rel="stylesheet" href="css/pw-dialogue.css">
+  <link rel="stylesheet" href="css/clinic-roam.css">
   <link rel="stylesheet" href="css/game.css">
   <link rel="stylesheet" href="css/mind-palace.css">
   <link rel="stylesheet" href="css/notebook.css">
@@ -27,43 +29,78 @@
       </div>
     </section>
 
+    <!-- CLINIC INTRO (Phoenix Wright-style dialogue) -->
+    <section class="screen" data-screen="clinic-intro" hidden>
+      <div class="pw-background" data-location="reception"></div>
+      <div class="pw-portrait-stage">
+        <div class="pw-portrait pw-portrait-left" hidden></div>
+        <div class="pw-portrait pw-portrait-right" hidden></div>
+      </div>
+      <div class="pw-dialogue-box" data-action="advance-pw">
+        <div class="pw-name-tag"></div>
+        <div class="pw-line-text"></div>
+        <div class="pw-advance-indicator" hidden>▼</div>
+      </div>
+      <button class="pw-skip-btn btn" data-action="skip-intro">Skip</button>
+    </section>
+
+    <!-- CLINIC ROAM (Edgeworth-style side view) -->
+    <section class="screen" data-screen="clinic-roam" hidden>
+      <div class="clinic-canvas-wrap">
+        <canvas class="clinic-canvas" width="960" height="540"></canvas>
+        <div class="clinic-hud">
+          <div class="clinic-roomname" data-bind="clinic-room">Clinic</div>
+          <div class="clinic-controls-hint">Click or WASD / arrows to move. E to interact.</div>
+        </div>
+        <div class="clinic-interact-hint" hidden></div>
+        <button class="clinic-talk-btn" data-action="clinic-interact" hidden>Talk</button>
+        <div class="clinic-fade"></div>
+      </div>
+    </section>
+
     <!-- GAME SCREEN -->
     <section class="screen" data-screen="game" hidden>
-      <header class="game-topbar">
-        <div class="patient-name" data-bind="patientName">Patient</div>
-        <div class="topbar-right">
-          <div class="rapport" title="Rapport">
-            <span class="rapport-label">Rapport</span>
-            <span class="rapport-value" data-bind="rapport">0</span>
-          </div>
-          <button class="icon-btn" data-action="open-mind-palace" title="Mind Palace">
-            <span class="icon-glyph">◇</span>
-            <span class="icon-label">Mind Palace</span>
-          </button>
-          <button class="icon-btn" data-action="open-notebook" title="Notebook">
-            <span class="icon-glyph">▤</span>
-            <span class="icon-label">Notebook</span>
-          </button>
-          <button class="icon-btn" data-action="open-settings" title="Settings">
-            <span class="icon-glyph">⚙</span>
-          </button>
-        </div>
-      </header>
+      <div class="game-backdrop" data-location="interview-room"></div>
 
-      <main class="game-stage">
-        <div class="patient-portrait" data-bind="patientPortrait">
-          <div class="portrait-silhouette"></div>
+      <div class="game-rapport-badge" title="Rapport">
+        <span class="rapport-label">Rapport</span>
+        <span class="rapport-value" data-bind="rapport">0</span>
+      </div>
+
+      <main class="game-stage" data-bind="gameStage" data-speaker="none">
+        <div class="game-portrait" data-bind="gamePortrait">
+          <img class="game-portrait-image" data-bind="gamePortraitImg" alt="" hidden>
         </div>
       </main>
 
       <section class="dialogue-area">
         <div class="dialogue-box" data-action="advance-line">
-          <div class="speaker" data-bind="speaker">Alex Morgan</div>
+          <div class="speaker" data-bind="speaker" hidden>Maya</div>
           <div class="line-text" data-bind="lineText"></div>
-          <div class="tap-hint" data-bind="tapHint">tap to continue</div>
+          <div class="tap-hint" data-bind="tapHint">▼</div>
         </div>
         <div class="choices" data-bind="choices" hidden></div>
       </section>
+
+      <div class="game-corner-tabs">
+        <button class="corner-tab" data-action="open-mind-palace" title="Mind Palace">
+          <span class="icon-glyph">◇</span>
+          <span class="icon-label">Mind Palace</span>
+        </button>
+        <button class="corner-tab" data-action="open-notebook" title="Notebook">
+          <span class="icon-glyph">▤</span>
+          <span class="icon-label">Notebook</span>
+        </button>
+        <button class="corner-tab corner-tab-exit" data-action="exit-to-roam" title="Leave interview">
+          <span class="icon-glyph">⇤</span>
+          <span class="icon-label">Exit</span>
+        </button>
+        <button class="corner-tab corner-tab-settings" data-action="open-settings" title="Settings">
+          <span class="icon-glyph">⚙</span>
+        </button>
+      </div>
+
+      <div class="patient-name-plate" data-bind="patientName" hidden>Patient</div>
     </section>
 
     <!-- MIND PALACE SCREEN -->

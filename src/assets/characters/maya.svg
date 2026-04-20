@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 500" preserveAspectRatio="xMidYMax meet">
+  <defs>
+    <linearGradient id="m-sweater" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a3adba"/>
+      <stop offset="1" stop-color="#5a6578"/>
+    </linearGradient>
+    <linearGradient id="m-skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8c6a3"/>
+      <stop offset="1" stop-color="#c89a74"/>
+    </linearGradient>
+    <linearGradient id="m-jeans" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a4458"/>
+      <stop offset="1" stop-color="#1e2534"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground shadow -->
+  <ellipse cx="100" cy="492" rx="42" ry="6" fill="rgba(0,0,0,0.32)"/>
+
+  <!-- Long hair falling behind body -->
+  <path d="M 58 72 Q 48 150 52 250 L 60 380 L 70 260 Q 68 160 70 90 Z" fill="#2a1f1a"/>
+  <path d="M 142 72 Q 152 150 148 250 L 140 380 L 130 260 Q 132 160 130 90 Z" fill="#2a1f1a"/>
+
+  <!-- LEGS — jeans -->
+  <path d="M 78 270 L 74 486 L 96 486 L 98 310 Z" fill="url(#m-jeans)" stroke="#0a0e18" stroke-width="1.4"/>
+  <path d="M 102 310 L 104 486 L 126 486 L 122 270 Z" fill="url(#m-jeans)" stroke="#0a0e18" stroke-width="1.4"/>
+  <!-- Seams -->
+  <line x1="85" y1="290" x2="82" y2="470" stroke="#0a0e18" stroke-width="0.8" opacity="0.5"/>
+  <line x1="115" y1="290" x2="118" y2="470" stroke="#0a0e18" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- Sneakers -->
+  <ellipse cx="85" cy="489" rx="14" ry="6" fill="#f0ece0" stroke="#0a0e18" stroke-width="1.2"/>
+  <ellipse cx="115" cy="489" rx="14" ry="6" fill="#f0ece0" stroke="#0a0e18" stroke-width="1.2"/>
+  <path d="M 73 487 L 98 487" stroke="#0a0e18" stroke-width="1" opacity="0.6"/>
+  <path d="M 103 487 L 128 487" stroke="#0a0e18" stroke-width="1" opacity="0.6"/>
+
+  <!-- ARMS (held close, hands clasped in front) -->
+  <path d="M 54 175 Q 44 215 52 260 L 72 255 Q 68 210 74 185 Z" fill="url(#m-sweater)" stroke="#0a0e18" stroke-width="1.4"/>
+  <path d="M 146 175 Q 156 215 148 260 L 128 255 Q 132 210 126 185 Z" fill="url(#m-sweater)" stroke="#0a0e18" stroke-width="1.4"/>
+  <!-- Hands clasped low-front -->
+  <ellipse cx="88" cy="268" rx="10" ry="9" fill="url(#m-skin)" stroke="#8a5a32" stroke-width="1"/>
+  <ellipse cx="112" cy="268" rx="10" ry="9" fill="url(#m-skin)" stroke="#8a5a32" stroke-width="1"/>
+
+  <!-- TORSO — oversized sweater -->
+  <path d="M 52 180 Q 54 158 100 150 Q 146 158 148 180 L 148 275 Q 100 282 52 275 Z"
+        fill="url(#m-sweater)" stroke="#0a0e18" stroke-width="1.6"/>
+  <!-- Sweater neckline darker -->
+  <path d="M 86 152 Q 100 165 114 152 L 112 168 Q 100 175 88 168 Z" fill="#3a4150"/>
+  <!-- Sweater fold lines -->
+  <path d="M 100 180 Q 95 230 90 275" stroke="#3a4150" stroke-width="1.2" fill="none" opacity="0.5"/>
+  <path d="M 100 180 Q 105 230 110 275" stroke="#3a4150" stroke-width="1.2" fill="none" opacity="0.5"/>
+
+  <!-- NECK -->
+  <rect x="90" y="128" width="20" height="24" rx="4" fill="url(#m-skin)" stroke="#8a5a32" stroke-width="1.2"/>
+  <path d="M 90 140 Q 100 148 110 140 L 110 151 L 90 151 Z" fill="#a87040" opacity="0.55"/>
+
+  <!-- HEAD -->
+  <ellipse cx="100" cy="80" rx="40" ry="46" fill="url(#m-skin)" stroke="#8a5a32" stroke-width="1.4"/>
+
+  <!-- Hair front/bangs -->
+  <path d="M 60 58 Q 62 26 100 22 Q 138 26 140 58 Q 140 70 130 72 Q 118 58 100 58 Q 82 58 70 72 Q 60 70 60 58 Z"
+        fill="#2a1f1a" stroke="#050303" stroke-width="1"/>
+  <!-- Side hair tufts -->
+  <path d="M 60 72 Q 55 110 58 150 L 68 145 Q 66 110 68 78 Z" fill="#2a1f1a"/>
+  <path d="M 140 72 Q 145 110 142 150 L 132 145 Q 134 110 132 78 Z" fill="#2a1f1a"/>
+
+  <!-- Cheeks -->
+  <ellipse cx="76" cy="92" rx="8" ry="5" fill="#e08472" opacity="0.4"/>
+  <ellipse cx="124" cy="92" rx="8" ry="5" fill="#e08472" opacity="0.4"/>
+
+  <!-- Ears (mostly covered) -->
+  <ellipse cx="62" cy="88" rx="3" ry="6" fill="url(#m-skin)" stroke="#8a5a32" stroke-width="0.8"/>
+  <ellipse cx="138" cy="88" rx="3" ry="6" fill="url(#m-skin)" stroke="#8a5a32" stroke-width="0.8"/>
+
+  <!-- EYES — downcast, worried -->
+  <ellipse cx="84" cy="88" rx="5" ry="3.5" fill="#f4ebda" stroke="#0a0806" stroke-width="1"/>
+  <ellipse cx="116" cy="88" rx="5" ry="3.5" fill="#f4ebda" stroke="#0a0806" stroke-width="1"/>
+  <ellipse cx="84" cy="90" rx="2.6" ry="2.6" fill="#3a2820"/>
+  <ellipse cx="116" cy="90" rx="2.6" ry="2.6" fill="#3a2820"/>
+  <!-- Upper lid -->
+  <path d="M 78 84 Q 84 82 90 84" stroke="#2a1f1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <path d="M 110 84 Q 116 82 122 84" stroke="#2a1f1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <!-- Worried brows (inner up) -->
+  <path d="M 78 76 Q 86 73 92 76" stroke="#2a1f1a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M 108 76 Q 114 73 122 76" stroke="#2a1f1a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+  <!-- Nose -->
+  <path d="M 98 94 Q 96 108 100 112 Q 104 108 102 94" stroke="#b07850" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+
+  <!-- Mouth — small closed -->
+  <path d="M 94 120 Q 100 118 106 120" stroke="#6b3828" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

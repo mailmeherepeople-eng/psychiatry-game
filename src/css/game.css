@@ -1,207 +1,386 @@
+/* Case dialogue — Phoenix Wright style single-portrait stage.
+   One character at a time (speaker), dialogue box anchored to the bottom,
+   subtle corner controls. Placeholder silhouettes until real character art. */
+
 [data-screen="game"] {
-  display: flex;
-  flex-direction: column;
-  background: var(--bg);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0a0a0a;
+  display: block;
 }
 
-.game-topbar {
+.game-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, #6c7480 0%, #3a4150 60%, #1b1f27 100%);
+  transition: background 400ms ease;
+}
+.game-backdrop[data-location="interview-room"] {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(220,230,240,0.25), transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.55) 0%, transparent 55%),
+    linear-gradient(180deg, #7b8390 0%, #4c5461 55%, #232832 100%);
+}
+.game-backdrop::after {
+  /* Subtle wall/floor seam and soft side vignettes, echoing the intro. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.25), transparent 18%, transparent 82%, rgba(0,0,0,0.25)),
+    linear-gradient(180deg, transparent 66%, rgba(0,0,0,0.22) 68%, transparent 72%);
+  pointer-events: none;
+}
+
+/* Top-left rapport badge — slim, unobtrusive. */
+.game-rapport-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 8;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(244, 241, 236, 0.85);
-  backdrop-filter: blur(8px);
-  z-index: 10;
-}
-
-.patient-name {
-  font-family: var(--font-serif);
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.rapport {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: rgba(14,22,38,0.78);
+  border: 1px solid rgba(140,180,220,0.35);
+  color: #fff;
+  backdrop-filter: blur(4px);
 }
-.rapport-label {
-  font-size: 11px;
-  letter-spacing: 0.1em;
+.game-rapport-badge .rapport-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: rgba(255,255,255,0.65);
 }
-.rapport-value {
-  font-weight: 600;
-  font-size: 15px;
+.game-rapport-badge .rapport-value {
+  font-weight: 700;
+  font-size: 14px;
   font-variant-numeric: tabular-nums;
   min-width: 18px;
   text-align: right;
 }
-.rapport-value.rapport-positive { color: var(--good); }
-.rapport-value.rapport-negative { color: var(--bad); }
+.game-rapport-badge .rapport-value.rapport-positive { color: #7ad89f; }
+.game-rapport-badge .rapport-value.rapport-negative { color: #e57a7a; }
 
-/* Stage — silhouette area */
+/* Optional patient-name plate top-right (subtle). */
+.patient-name-plate {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 8;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: rgba(14,22,38,0.55);
+  border: 1px solid rgba(140,180,220,0.22);
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+}
+.patient-name-plate[hidden] { display: none; }
+
+/* Single portrait stage. Full area above the dialogue box. */
 .game-stage {
-  flex: 1;
+  position: absolute;
+  inset: 0 0 220px 0;
+  z-index: 1;
   display: flex;
   align-items: flex-end;
-  justify-content: center;
-  padding: 32px 24px 16px 24px;
-  min-height: 0;
+  justify-content: flex-end;
+  padding: 0 30px 0 30px;
   overflow: hidden;
 }
 
-.patient-portrait {
+/* Speaker positioning — mirrors PW (witness on right, Phoenix on left). */
+.game-stage[data-speaker="patient"]  { justify-content: flex-end; }
+.game-stage[data-speaker="doctor"]   { justify-content: flex-start; }
+.game-stage[data-speaker="narration"],
+.game-stage[data-speaker="none"] { justify-content: center; }
+
+.game-portrait {
   position: relative;
-  width: min(340px, 70vw);
-  aspect-ratio: 3 / 4;
-  max-height: 52vh;
+  height: 100%;
+  width: min(52%, 640px);
+  max-width: 640px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+.game-portrait[hidden] { display: none; }
+
+.game-stage[data-speaker="narration"] .game-portrait,
+.game-stage[data-speaker="none"]      .game-portrait { display: none; }
+
+.game-portrait {
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.game-portrait-image {
+  /* Full-body SVG (viewBox 200x500). Height >100% makes the image
+     taller than the container; overflow:hidden + flex-start anchors
+     it to the top, so only the waist-up portion shows in dialogue
+     (legs stay in the SVG for the roam canvas). */
+  height: 215%;
+  width: auto;
+  max-width: none;
+  display: block;
+  filter: drop-shadow(0 18px 32px rgba(0,0,0,0.55));
+  animation: portraitEnter 220ms ease both;
+}
+.game-portrait-image[hidden] { display: none; }
+
+@keyframes portraitEnter {
+  0% { opacity: 0; transform: translateY(10px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.portrait-silhouette {
-  position: absolute;
-  inset: 0;
-  background: var(--patient-color, #6b7a99);
-  border-radius: 180px 180px 24px 24px;
-  box-shadow: var(--shadow-lg);
-  transition: background var(--t-smooth);
-}
-.portrait-silhouette::before {
-  content: "";
-  position: absolute;
-  top: 12%;
-  left: 50%;
-  width: 38%;
-  aspect-ratio: 1;
-  background: inherit;
-  filter: brightness(0.92);
-  border-radius: 50%;
-  transform: translateX(-50%);
-}
-
-/* Dialogue */
+/* Dialogue area pinned to bottom. */
 .dialogue-area {
-  padding: 0 20px 24px 20px;
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 3;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .dialogue-box {
   position: relative;
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 18px 22px 30px 22px;
-  box-shadow: var(--shadow-md);
+  background: rgba(12, 18, 30, 0.94);
+  border: 2px solid rgba(140, 180, 220, 0.55);
+  border-radius: 8px;
+  padding: 28px 32px 28px 32px;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.6) inset,
+    0 18px 40px rgba(0,0,0,0.55);
   cursor: pointer;
-  min-height: 108px;
+  min-height: 110px;
+  color: #fefefc;
   transition: border-color var(--t-quick);
 }
-.dialogue-box:hover { border-color: var(--border-strong); }
+.dialogue-box:hover { border-color: rgba(180, 210, 240, 0.8); }
 
+/* Blue pill name tag — matches PW classic look. */
 .speaker {
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-bottom: 6px;
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  background: linear-gradient(180deg, #3a6b9c 0%, #21426e 100%);
+  color: #f0f5ff;
+  padding: 5px 18px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  border: 1px solid rgba(180, 210, 240, 0.55);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  text-transform: none;
+  margin: 0;
+  min-width: 70px;
+  text-align: center;
 }
+.speaker[hidden] { display: none; }
 
 .line-text {
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--ink);
-  min-height: 1.55em;
+  font-family: var(--font-sans);
+  font-size: 19px;
+  line-height: 1.5;
+  color: #fefefc;
+  min-height: 1.5em;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+.dialogue-box.is-narration { padding: 24px 32px; }
+.dialogue-box.is-narration .line-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  text-align: center;
+  color: rgba(240,240,232,0.92);
+  font-size: 18px;
 }
 
 .tap-hint {
   position: absolute;
-  right: 14px;
+  right: 18px;
   bottom: 8px;
-  font-size: 11px;
-  color: var(--ink-faint);
-  letter-spacing: 0.04em;
+  font-size: 12px;
+  color: rgba(160, 200, 240, 0.85);
   opacity: 0;
-  animation: tapBlink 1.8s ease-in-out infinite;
+  animation: tapBlink 0.85s ease-in-out infinite;
 }
-.dialogue-box.line-done .tap-hint { opacity: 0.8; }
+.dialogue-box.line-done .tap-hint { opacity: 1; }
 
 @keyframes tapBlink {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.9; }
+  0%, 100% { opacity: 0.25; transform: translateY(0); }
+  50%      { opacity: 1;    transform: translateY(3px); }
 }
 
-/* Snippet capture flash */
-.snippet-flash {
-  position: absolute;
-  right: 14px;
-  top: 14px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  animation: snippetPop var(--t-smooth) both;
-}
-@keyframes snippetPop {
-  0% { transform: scale(0.6) translateY(-8px); opacity: 0; }
-  60% { transform: scale(1.04) translateY(0); opacity: 1; }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
-}
-
-/* Choices */
+/* Choices — small navy buttons stacked above the dialogue box. */
 .choices {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   animation: fadeIn var(--t-smooth) both;
 }
 .choices[hidden] { display: none; }
 
 .choice {
   text-align: left;
-  padding: 14px 18px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  color: var(--ink);
-  font: inherit;
+  padding: 11px 18px;
+  border-radius: 6px;
+  background: rgba(14, 22, 38, 0.94);
+  border: 2px solid rgba(140, 180, 220, 0.55);
+  color: #fefefc;
+  font-family: var(--font-sans);
   font-size: 15px;
+  font-weight: 500;
   line-height: 1.4;
   cursor: pointer;
   transition: background var(--t-quick), border-color var(--t-quick), transform var(--t-quick);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
 .choice:hover {
-  border-color: var(--accent);
-  background: #fbfaf7;
-  transform: translateX(2px);
+  border-color: #e8c85c;
+  background: rgba(20, 30, 50, 0.95);
+  transform: translateX(3px);
 }
 .choice:active { transform: translateX(0); }
 
-/* Typewriter cursor */
-.type-cursor {
-  display: inline-block;
-  width: 0.5ch;
-  background: var(--ink);
-  margin-left: 2px;
-  animation: blink 1s steps(2) infinite;
+/* Top-right corner tabs — out of the portrait's way. */
+.game-corner-tabs {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
 }
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+
+.corner-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  background: rgba(14, 22, 38, 0.88);
+  border: 1px solid rgba(140, 180, 220, 0.4);
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: color var(--t-quick), border-color var(--t-quick), background var(--t-quick);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+.corner-tab:hover {
+  color: #fff;
+  border-color: #e8c85c;
+  background: rgba(20, 30, 50, 0.95);
+}
+.corner-tab .icon-glyph { font-size: 14px; }
+.corner-tab .icon-label { font-weight: 600; }
+
+.corner-tab-exit {
+  border-color: rgba(240, 180, 140, 0.55);
+  color: #f5d8b8;
+}
+.corner-tab-exit:hover {
+  border-color: #f0a668;
+  color: #fff;
+  background: rgba(60, 30, 20, 0.9);
+}
+
+.corner-tab-settings {
+  padding: 7px 11px;
+}
+.corner-tab-settings .icon-label { display: none; }
+
+@media (max-width: 640px) {
+  .corner-tab .icon-label { display: none; }
+  .corner-tab { padding: 7px 11px; }
+}
+
+/* Short viewports (mobile landscape ~375px tall) */
+@media (max-height: 420px) {
+  .game-rapport-badge {
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    gap: 6px;
+  }
+  .game-rapport-badge .rapport-label { font-size: 9px; letter-spacing: 0.14em; }
+  .game-rapport-badge .rapport-value { font-size: 12px; }
+
+  .game-corner-tabs {
+    right: 8px;
+    top: 8px;
+    gap: 4px;
+  }
+  .corner-tab {
+    padding: 6px 9px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    gap: 0;
+  }
+  .corner-tab .icon-label { display: none; }
+  .corner-tab .icon-glyph { font-size: 13px; }
+  .corner-tab-settings { padding: 6px 9px; }
+
+  /* Dialogue box fits the bottom ~30% of the screen. */
+  .dialogue-area {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    gap: 6px;
+  }
+  .dialogue-box {
+    min-height: 72px;
+    padding: 20px 18px 18px 18px;
+    border-width: 2px;
+  }
+  .speaker {
+    top: -13px;
+    left: 12px;
+    padding: 3px 14px;
+    font-size: 12px;
+    min-width: 60px;
+  }
+  .line-text { font-size: 14px; line-height: 1.4; }
+  .dialogue-box.is-narration .line-text { font-size: 14px; }
+  .tap-hint { right: 12px; bottom: 4px; font-size: 10px; }
+
+  /* Choice buttons: shorter, smaller so the full set fits above the dialogue box. */
+  .choice {
+    padding: 7px 14px;
+    font-size: 13px;
+    border-width: 1.5px;
+    border-radius: 5px;
+  }
+
+  /* Portrait must leave room for the dialogue box at the bottom. */
+  .game-stage {
+    inset: 0 0 130px 0;
+    padding: 0 20px;
+  }
+  .game-portrait {
+    width: min(62%, 280px);
+  }
+  .game-portrait-figure {
+    width: min(260px, 100%);
+  }
 }

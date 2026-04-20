@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 500" preserveAspectRatio="xMidYMax meet">
+  <defs>
+    <linearGradient id="d-jacket" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a4660"/>
+      <stop offset="1" stop-color="#1b2234"/>
+    </linearGradient>
+    <linearGradient id="d-skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ecd0a8"/>
+      <stop offset="1" stop-color="#c9a576"/>
+    </linearGradient>
+    <linearGradient id="d-pants" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c3446"/>
+      <stop offset="1" stop-color="#141828"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground shadow -->
+  <ellipse cx="100" cy="492" rx="44" ry="6" fill="rgba(0,0,0,0.32)"/>
+
+  <!-- LEGS — trousers -->
+  <!-- Left leg -->
+  <path d="M 78 260 L 72 486 L 96 486 L 98 300 L 94 260 Z" fill="url(#d-pants)" stroke="#0a0e18" stroke-width="1.4"/>
+  <!-- Right leg -->
+  <path d="M 106 260 L 102 300 L 104 486 L 128 486 L 122 260 Z" fill="url(#d-pants)" stroke="#0a0e18" stroke-width="1.4"/>
+  <!-- Center crease -->
+  <line x1="85" y1="280" x2="83" y2="460" stroke="#0a0e18" stroke-width="1" opacity="0.45"/>
+  <line x1="115" y1="280" x2="117" y2="460" stroke="#0a0e18" stroke-width="1" opacity="0.45"/>
+  <!-- Shoes -->
+  <ellipse cx="84" cy="489" rx="16" ry="6" fill="#1a1410" stroke="#050303" stroke-width="1.2"/>
+  <ellipse cx="116" cy="489" rx="16" ry="6" fill="#1a1410" stroke="#050303" stroke-width="1.2"/>
+  <ellipse cx="80" cy="487" rx="5" ry="2" fill="#ffffff" opacity="0.25"/>
+  <ellipse cx="112" cy="487" rx="5" ry="2" fill="#ffffff" opacity="0.25"/>
+
+  <!-- Arms (behind torso) -->
+  <!-- Left arm -->
+  <path d="M 48 180 Q 38 210 42 270 L 62 270 Q 64 215 72 190 Z" fill="url(#d-jacket)" stroke="#0a0e18" stroke-width="1.4"/>
+  <!-- Right arm -->
+  <path d="M 152 180 Q 162 210 158 270 L 138 270 Q 136 215 128 190 Z" fill="url(#d-jacket)" stroke="#0a0e18" stroke-width="1.4"/>
+  <!-- Hands -->
+  <circle cx="52" cy="274" r="10" fill="url(#d-skin)" stroke="#8a5a32" stroke-width="1"/>
+  <circle cx="148" cy="274" r="10" fill="url(#d-skin)" stroke="#8a5a32" stroke-width="1"/>
+
+  <!-- TORSO — suit jacket -->
+  <path d="M 60 175 Q 60 155 100 148 Q 140 155 140 175 L 140 270 L 60 270 Z"
+        fill="url(#d-jacket)" stroke="#0a0e18" stroke-width="1.6"/>
+  <!-- Lapels -->
+  <path d="M 100 155 L 80 270 L 88 270 L 100 200 Z" fill="#14182a"/>
+  <path d="M 100 155 L 120 270 L 112 270 L 100 200 Z" fill="#14182a"/>
+  <!-- Shirt (under jacket V) -->
+  <path d="M 88 155 L 112 155 L 110 210 L 90 210 Z" fill="#f4efde" stroke="#b8a880" stroke-width="1"/>
+  <!-- Collar points -->
+  <path d="M 88 155 L 100 175 L 90 172 Z" fill="#ffffff" stroke="#b8a880" stroke-width="1"/>
+  <path d="M 112 155 L 100 175 L 110 172 Z" fill="#ffffff" stroke="#b8a880" stroke-width="1"/>
+  <!-- Tie -->
+  <path d="M 94 168 L 106 168 L 108 200 L 100 215 L 92 200 Z" fill="#3a7b7b" stroke="#1c4646" stroke-width="1"/>
+  <path d="M 96 215 L 104 215 L 108 265 L 92 265 Z" fill="#3a7b7b" stroke="#1c4646" stroke-width="1"/>
+  <!-- Tie highlight -->
+  <line x1="100" y1="175" x2="100" y2="260" stroke="#5ea3a0" stroke-width="1" opacity="0.55"/>
+  <!-- Jacket button -->
+  <circle cx="100" cy="250" r="2.2" fill="#d4b968"/>
+
+  <!-- NECK -->
+  <rect x="88" y="125" width="24" height="26" rx="5" fill="url(#d-skin)" stroke="#8a5a32" stroke-width="1.2"/>
+  <path d="M 88 140 Q 100 150 112 140 L 112 151 L 88 151 Z" fill="#a87040" opacity="0.55"/>
+
+  <!-- HEAD -->
+  <ellipse cx="100" cy="76" rx="40" ry="46" fill="url(#d-skin)" stroke="#8a5a32" stroke-width="1.4"/>
+  <!-- Jaw shadow -->
+  <path d="M 64 86 Q 100 140 136 86 Q 132 118 100 128 Q 68 118 64 86 Z" fill="#b07850" opacity="0.3"/>
+  <!-- Cheek -->
+  <ellipse cx="76" cy="86" rx="8" ry="5" fill="#d88874" opacity="0.35"/>
+  <ellipse cx="124" cy="86" rx="8" ry="5" fill="#d88874" opacity="0.35"/>
+
+  <!-- HAIR -->
+  <path d="M 60 52 Q 64 22 100 20 Q 136 22 140 52 Q 144 78 136 82 Q 132 60 124 54 Q 112 68 100 66 Q 88 68 76 54 Q 68 60 64 82 Q 56 78 60 52 Z"
+        fill="#1a1612" stroke="#050303" stroke-width="1"/>
+  <!-- Hair shine -->
+  <path d="M 76 34 Q 96 28 116 32 Q 104 42 88 44 Z" fill="#2e2824" opacity="0.7"/>
+
+  <!-- Ears -->
+  <ellipse cx="60" cy="82" rx="5" ry="8" fill="url(#d-skin)" stroke="#8a5a32" stroke-width="1"/>
+  <ellipse cx="140" cy="82" rx="5" ry="8" fill="url(#d-skin)" stroke="#8a5a32" stroke-width="1"/>
+
+  <!-- EYES -->
+  <ellipse cx="84" cy="84" rx="5" ry="3" fill="#f4ebda" stroke="#0a0806" stroke-width="1"/>
+  <ellipse cx="116" cy="84" rx="5" ry="3" fill="#f4ebda" stroke="#0a0806" stroke-width="1"/>
+  <circle cx="84" cy="84" r="2.2" fill="#1a1612"/>
+  <circle cx="116" cy="84" r="2.2" fill="#1a1612"/>
+  <!-- Brows -->
+  <path d="M 78 74 L 92 72" stroke="#1a1612" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 108 72 L 122 74" stroke="#1a1612" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Nose -->
+  <path d="M 98 92 Q 96 106 100 110 Q 104 106 102 92" stroke="#b07850" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+
+  <!-- Mouth -->
+  <path d="M 92 118 Q 100 122 108 118" stroke="#6b3828" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+</svg>

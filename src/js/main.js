@@ -5,6 +5,9 @@ import { loadCase } from './case-loader.js';
 import * as engine from './engine.js';
 import { renderMindPalace } from './mind-palace.js';
 import { renderNotebook } from './notebook.js';
+import * as pwDialogue from './pw-dialogue.js';
+import * as clinicRoam from './clinic-roam.js';
+import { INTRO_SCRIPT, INTRO_CHARACTERS } from './clinic-intro.js';
 
 const TYPE_SPEED_MS = 22;
 const AUTO_ADVANCE_DELAY_MS = 1800;
@@ -12,6 +15,11 @@ const AUTO_ADVANCE_DELAY_MS = 1800;
 let typewriterToken = 0;
 let currentTypewriterKey = null; // "nodeId:lineIndex" — prevents duplicate starts
 let autoAdvanceTimer = null;
+
+// Side systems: Phoenix Wright intro dialogue + Edgeworth-style roam.
+let pwActive = false;
+let roamActive = false;
+let roamPendingStart = null; // { roomId, spawn } — overrides the default 'reception' spawn
 
 // ------- Bootstrap -------
 
@@ -97,6 +105,8 @@ function render() {
   const settingsEl = document.querySelector('[data-screen="settings"]');
   settingsEl.hidden = !state.settingsOpen;
 
+  syncSideSystems();
+
   // Toast
   const toastEl = document.querySelector('[data-bind="toast"]');
   if (state.toast) {
@@ -129,25 +139,77 @@ function render() {
   if (toggle) toggle.checked = !!state.autoAdvance;
 }
 
+function syncSideSystems() {
+  // Phoenix Wright intro: start once entering clinic-intro.
+  if (state.screen === 'clinic-intro' && !pwActive) {
+    pwActive = true;
+    // Let the screen become visible, then boot the dialogue.
+    setTimeout(() => {
+      pwDialogue.startDialogue(
+        INTRO_SCRIPT,
+        INTRO_CHARACTERS,
+        '[data-screen="clinic-intro"]',
+        () => {
+          pwActive = false;
+          state.screen = 'clinic-roam';
+          render();
+        },
+      );
+    }, 0);
+  } else if (state.screen !== 'clinic-intro' && pwActive && !pwDialogue.isActive()) {
+    pwActive = false;
+  }
+
+  // Clinic roam: start once entering clinic-roam.
+  if (state.screen === 'clinic-roam' && !roamActive) {
+    roamActive = true;
+    const start = roamPendingStart || { roomId: 'reception', spawn: null };
+    roamPendingStart = null;
+    setTimeout(() => {
+      clinicRoam.startRoam(start.roomId, start.spawn, {
+        onPatientInteract: () => {
+          clinicRoam.stopRoam();
+          roamActive = false;
+          state.screen = 'game';
+          render();
+        },
+      });
+    }, 0);
+  } else if (state.screen !== 'clinic-roam' && roamActive) {
+    clinicRoam.stopRoam();
+    roamActive = false;
+  }
+}
+
+const DOCTOR = {
+  name: 'Dr. Kuroi',
+  color: '#3a4456',
+  sprite: 'assets/characters/doctor.svg',
+};
+const PATIENT_SPRITE_MAP = {
+  'case-01-gad-tutorial': 'assets/characters/maya.svg',
+};
+
 function renderGame() {
   const { caseData } = state;
   if (!caseData) return;
 
-  document.querySelector('[data-bind="patientName"]').textContent = caseData.patient.name;
-
-  const portrait = document.querySelector('.portrait-silhouette');
-  portrait.style.setProperty('--patient-color', caseData.patient.silhouetteColor);
-
+  // Rapport badge (top-left).
   const rapportEl = document.querySelector('[data-bind="rapport"]');
   rapportEl.textContent = String(state.rapport);
   rapportEl.classList.toggle('rapport-positive', state.rapport > 0);
   rapportEl.classList.toggle('rapport-negative', state.rapport < 0);
 
+  // The patient-name-plate top-right is kept hidden — the dialogue name pill
+  // already shows the current speaker, no need to duplicate.
+  const namePlateEl = document.querySelector('[data-bind="patientName"]');
+  if (namePlateEl) {
+    namePlateEl.textContent = caseData.patient.name;
+    namePlateEl.hidden = true;
+  }
+
   const node = engine.getCurrentNodeData();
   if (!node) return;
-
-  const speakerEl = document.querySelector('[data-bind="speaker"]');
-  speakerEl.textContent = node.speaker === 'narration' ? 'Narration' : caseData.patient.name;
 
   const line = engine.getCurrentLine();
   if (!line) return;
@@ -155,8 +217,60 @@ function renderGame() {
   const lineTextEl = document.querySelector('[data-bind="lineText"]');
   const choicesEl = document.querySelector('[data-bind="choices"]');
   const dialogueBox = document.querySelector('.dialogue-box');
+  const speakerEl = document.querySelector('[data-bind="speaker"]');
+  const stageEl = document.querySelector('[data-bind="gameStage"]');
+  const portraitImg = document.querySelector('[data-bind="gamePortraitImg"]');
 
   dialogueBox.classList.toggle('line-done', state.lineDone);
+
+  // Determine who is "on stage" for this line/state.
+  // Rules:
+  //   - narration  → no portrait, italic box, no name tag
+  //   - speaker === 'patient'  → patient on right
+  //   - speaker === 'doctor'   → doctor on left
+  //   - line done + choices pending → doctor on left (player is about to speak)
+  //   - otherwise → patient on right (default for unknown speakers in this case)
+  const choicesPending =
+    state.lineDone && !engine.hasMoreLines() && !engine.isTerminal() &&
+    Array.isArray(node.choices) && node.choices.length > 0;
+
+  // Stage portrait matches the line's speaker. Player choices are a menu;
+  // they don't change who's on screen (just like Phoenix Wright).
+  let stageSpeaker;
+  if (node.speaker === 'narration') stageSpeaker = 'narration';
+  else if (node.speaker === 'doctor') stageSpeaker = 'doctor';
+  else stageSpeaker = 'patient';
+  stageEl.dataset.speaker = stageSpeaker;
+
+  if (portraitImg) {
+    if (stageSpeaker === 'narration') {
+      portraitImg.hidden = true;
+    } else {
+      const src = stageSpeaker === 'doctor'
+        ? DOCTOR.sprite
+        : (PATIENT_SPRITE_MAP[caseData.id] || 'assets/characters/maya.svg');
+      if (portraitImg.getAttribute('src') !== src) {
+        portraitImg.setAttribute('src', src);
+      }
+      portraitImg.hidden = false;
+    }
+  }
+
+  // Box styling: italic + centered for narration lines, regardless of who is
+  // "on stage" for the pending choices.
+  dialogueBox.classList.toggle('is-narration', node.speaker === 'narration');
+
+  // Name tag: reflects the *line's* speaker. Narration hides it.
+  if (node.speaker === 'narration') {
+    speakerEl.hidden = true;
+    speakerEl.textContent = '';
+  } else if (node.speaker === 'doctor') {
+    speakerEl.hidden = false;
+    speakerEl.textContent = DOCTOR.name;
+  } else {
+    speakerEl.hidden = false;
+    speakerEl.textContent = caseData.patient.name;
+  }
 
   if (state.lineDone) {
     lineTextEl.textContent = line.text;
@@ -358,12 +472,22 @@ function wireActions() {
     const action = target.dataset.action;
     switch (action) {
       case 'start-new-case':
+        startNewCaseFlow();
+        break;
       case 'resume-case':
-        if (state.status === 'completed') {
-          resetSession();
-        } else {
-          goGame();
-        }
+        goGame();
+        break;
+      case 'advance-pw':
+        pwDialogue.advanceDialogue();
+        break;
+      case 'skip-intro':
+        pwDialogue.skipDialogue();
+        break;
+      case 'clinic-interact':
+        // The clinic roam module handles this via its own listener; no-op here.
+        break;
+      case 'exit-to-roam':
+        exitCaseToRoam();
         break;
       case 'open-mind-palace': goMindPalace(); break;
       case 'close-mind-palace': goGame(); break;
@@ -393,14 +517,44 @@ function wireActions() {
     }
   });
 
-  // Keyboard: space/enter advance dialogue
+  // Keyboard: space/enter advance dialogue in game or intro.
   document.addEventListener('keydown', (e) => {
-    if (state.screen !== 'game') return;
-    if (e.code === 'Space' || e.code === 'Enter') {
-      e.preventDefault();
-      onDialogueTap();
+    if (state.screen === 'game') {
+      if (e.code === 'Space' || e.code === 'Enter') {
+        e.preventDefault();
+        onDialogueTap();
+      }
+    } else if (state.screen === 'clinic-intro') {
+      if (e.code === 'Space' || e.code === 'Enter') {
+        e.preventDefault();
+        pwDialogue.advanceDialogue();
+      }
     }
+    // clinic-roam handles its own keys inside that module
   });
+}
+
+function exitCaseToRoam() {
+  // Leave the interview mid-session. Session state (currentNode, rapport,
+  // choices, snippets) is already persisted, so walking back into Maya will
+  // resume the case at the current node.
+  clearAutoAdvance();
+  currentTypewriterKey = null;
+  resetDialogueUi();
+  // Spawn just inside the interview room, past the door.
+  roamPendingStart = { roomId: 'patient-room', spawn: { x: 200, y: 482 } };
+  state.screen = 'clinic-roam';
+  render();
+}
+
+async function startNewCaseFlow() {
+  // If the previous session is completed, reset it first so the Case 01 state
+  // is fresh when the player eventually walks into the interview room.
+  if (state.status === 'completed') {
+    await resetSession();
+  }
+  state.screen = 'clinic-intro';
+  render();
 }
 
 // Re-render helper exported for state.showToast

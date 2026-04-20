@@ -1,0 +1,121 @@
+/* Edgeworth Investigations-style roaming view. Full-screen stage holding a
+   16:9 canvas that renders the clinic scene. */
+
+[data-screen="clinic-roam"] {
+  position: absolute;
+  inset: 0;
+  background: #080b10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+}
+[data-screen="clinic-roam"][hidden] { display: none; }
+
+.clinic-canvas-wrap {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+}
+
+.clinic-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #1a1f2a;
+  cursor: pointer;
+  image-rendering: auto;
+  touch-action: none;
+}
+
+.clinic-fade {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+  z-index: 5;
+}
+.clinic-fade.is-active { opacity: 1; }
+
+.clinic-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  color: rgba(255,255,255,0.75);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  z-index: 3;
+}
+
+.clinic-roomname {
+  font-weight: 800;
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+}
+
+.clinic-controls-hint {
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  font-size: 10px;
+}
+
+.clinic-interact-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 72px;
+  transform: translateX(-50%);
+  padding: 9px 22px;
+  background: linear-gradient(180deg, rgba(26,38,60,0.96), rgba(14,22,38,0.96));
+  color: #fff;
+  border: 2px solid #5a82a8;
+  border-radius: 6px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08) inset,
+    0 10px 24px rgba(0,0,0,0.4);
+  z-index: 4;
+  animation: hintPulse 1.8s ease-in-out infinite;
+}
+.clinic-interact-hint[hidden] { display: none; }
+
+@keyframes hintPulse {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-3px); }
+}
+
+.clinic-talk-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #f0cf5e 0%, #c39a2e 100%);
+  color: #2a1e06;
+  border: 2px solid #7a5a14;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  padding: 10px 26px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  z-index: 4;
+  cursor: pointer;
+  transition: transform 120ms ease;
+}
+.clinic-talk-btn:hover { transform: translateX(-50%) translateY(-2px); }
+.clinic-talk-btn:active { transform: translateX(-50%) translateY(0); }
+.clinic-talk-btn[hidden] { display: none; }

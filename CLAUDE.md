@@ -1,7 +1,7 @@
 # CLAUDE.md — Jungian Slip
 
 > Persistent project briefing for Claude Code. Read this at the start of every session.
-> Last updated: 2026-04-19 (v2)
+> Last updated: 2026-04-21 (v4)
 
 ## The project
 
@@ -74,7 +74,7 @@ Plus a clinic hub: one nurse, one receptionist, optional colleague. Hub scenes a
 - **Backend:** Supabase (auth, saves, analytics, case versioning)
 - **Mobile shell:** Capacitor Android first, iOS later
 - **Dev server:** http-server on port 3000 against `src/`
-- **Testing:** Playwright MCP for visual and flow testing (to be added)
+- **Testing:** Playwright MCP for visual and flow testing
 - **Notifications:** ntfy.sh (see Workflow section)
 
 ---
@@ -85,12 +85,14 @@ Plus a clinic hub: one nurse, one receptionist, optional colleague. Hub scenes a
 psychiatry-game/
 ├── CLAUDE.md                  ← this file
 ├── .claude/                   ← agent config (skills, settings)
-├── .mcp.json                  ← MCP server config (to be added)
+├── .mcp.json                  ← MCP server config (Supabase + Playwright)
 ├── src/                       ← source of truth for code
 │   ├── index.html
-│   ├── js/
-│   ├── css/
-│   └── data/cases/            ← case JSON files
+│   ├── js/                    ← engine, state, main, case-loader, mind-palace, notebook, player, supabase-client
+│   ├── css/                   ← main, title, game, mind-palace, notebook
+│   └── data/cases/            ← case JSON files + author-facing .md companion docs
+├── supabase/
+│   └── migrations/            ← schema source of truth (see Database rules)
 ├── www/                       ← build output (gitignored)
 ├── android/                   ← Capacitor Android project
 ├── capacitor.config.json
@@ -209,6 +211,20 @@ curl.exe -d "Jungian Slip: <one-line task summary>" ntfy.sh/ade-maga-jobs-done-a
 
 Then stop. Do not start the next task unprompted.
 
+### Changelog
+
+`changelog.md` at repo root is the running log of every change made in a session.
+
+**Rule:** Every assistant response appends one line to `changelog.md` before yielding. Format:
+
+```
+- YYYY-MM-DD HH:MM — <one-line summary of what this response did / changed / concluded>
+```
+
+If the response is purely conversational (no code touched, no decisions reached), still append a short note so the timeline doesn't gap. Major changes (ships, structural decisions, new mechanics) additionally update the "Current status" section below.
+
+Kuroi uses `changelog.md` as pasteable context for new sessions — pasting the last ~N lines is faster than re-reading CLAUDE.md.
+
 ---
 
 ## Writing conventions
@@ -252,25 +268,34 @@ Doctor turned indie game developer. Runs Git Gud solo. Prefers terse communicati
 
 ## Current status
 
-Scaffold phase complete. Claude Code + permissions configured. Paused mid-MCP setup.
+Milestone 2 in flight: Phoenix Wright-style dialogue + Edgeworth-style clinic roam + full-body character sprites. Case 01 still awaits clinical sign-off (content unchanged since M1).
 
 **Done:**
-- Capacitor initialised (`com.gitgud.jungianslip`)
-- Android platform added
-- Dev server working on localhost:3000
-- `.gitignore` clean
-- ntfy notifications wired and tested
-- CLAUDE.md committed
-- Claude Code installed, logged in via Max plan, reads CLAUDE.md correctly
-- `.claude/settings.json` committed with allow/deny permissions tested
+- Scaffold: Capacitor (`com.gitgud.jungianslip`), Android platform, dev server on localhost:3000
+- Tooling: ntfy, Claude Code on Max, `.claude/settings.json` permissions, MCP (Supabase + Playwright)
+- Supabase: first migration `supabase/migrations/20260419_init_m1_schema.sql` applied, `src/js/supabase-client.js` in place
+- `case-authoring` skill committed and in use
+- Walking skeleton (M1): title screen, dialogue engine, state, notebook, mind palace, player module
+- **Case 01 drafted**: "Maya Nair and the 11pm Replay" (GAD tutorial) — JSON + author `.md`, dialogue tree, differential, debrief. NOT yet clinically signed off.
+- **Phoenix Wright intro** (`src/js/pw-dialogue.js`, `src/css/pw-dialogue.css`): two-nurse opening with active/inactive portrait dimming, blue-pill name tag, typewriter, advance indicator
+- **Edgeworth-style clinic roam** (`src/js/clinic-roam.js`, `src/js/clinic-rooms.js`): canvas side-view, 5 rooms (reception, corridor, interview room, kitchen, office), click-to-move via waypoints + WASD/arrows, room transitions with fade
+- **Full-body SVG character sprites** (`src/assets/characters/`): `doctor.svg`, `maya.svg`, `priya.svg`, `dev.svg` — head-to-feet AAI investigation style. Same SVGs drive both dialogue portraits (cropped waist-up via CSS) and roam sprites (full body on canvas).
+- **Case 01 PW reskin**: dark navy dialogue box, yellow gold name-tag → blue-pill name-tag, serif italic narration, speaker portrait on right for patient / left for doctor
+- **Exit interview**: corner-tab "Exit" button returns player to the interview room in roam view. Session state persists — walking back to Maya resumes the case at the current node.
+- **Feet-only collision** (bottom 1/4 of sprite): `playerCollider()` returns `ROAM_SPRITE.h / 4` tall rect; `obstacleCollider()` returns back-wall floor footprint per obstacle type (depth 26-46px). Head/torso visually overlap furniture; only feet stop. Debug overlay available via `window.__showColliders = true` in DevTools.
+- **Pseudo-3D furniture**: each obstacle drawn with tilted top face (parallelogram), left side bevel, front gradient, floor shadow ellipse.
+- **Mobile lock**: `capacitor.config.json` + Android manifest set `sensorLandscape`. iPhone SE landscape (667×375) media queries in `title.css`, `pw-dialogue.css`, `game.css` shrink dialogue box, portrait, and corner tabs.
+- **Walk speed**: `PLAYER.speed = 340` px/s (1.5× original).
+- References from Kuroi stored in `references/` (pasted screenshots of PW courtroom + AAI investigation sprites).
 
-**In progress: MCP setup (step 6)**
-- Next action: create Supabase project named `jungian-slip` on supabase.com
-- Then: generate Personal Access Token, grab Project Reference ID
-- Then: put `SUPABASE_ACCESS_TOKEN` and `SUPABASE_PROJECT_REF` in `.env`
-- Then: write `.mcp.json` to wire Supabase MCP (write-enabled, scoped to this project) and Playwright MCP
-- Then: test MCP tools work in Claude Code
+**In progress:**
+- Nothing uncommitted. Working tree includes today's changes — awaiting Kuroi's commit approval.
 
-**Blocked on:** nothing, just picking back up tomorrow.
+**Next (in order):**
+1. Kuroi's visual parity pass against `references/*.png` — iterate until the dialogue and roam both match.
+2. Case 01 clinical edit pass (still gated).
+3. Case 02 brief (first mood disorder — depression).
+4. Walk animation loop (currently static sprite).
+5. Real painted room backgrounds (currently gradient).
 
-**Next after MCP:** build the case-authoring skill using `/skill-creator` inside Claude Code.
+**Blocked on:** Case 01 clinical sign-off. No technical blockers.
