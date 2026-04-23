@@ -16,6 +16,10 @@
     "playwright": {
       "command": "cmd",
       "args": ["/c", "npx", "-y", "@playwright/mcp@latest"]
+    },
+    "lottiefiles-creator": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@lottiefiles/creator-mcp@latest"]
     }
   }
 }

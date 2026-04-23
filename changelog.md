@@ -38,3 +38,5 @@ Rule (see CLAUDE.md → Workflow → Changelog): every assistant response append
 - 2026-04-21 01:10 — Updated CLAUDE.md: `Last updated: 2026-04-21 (v4)`; status section rewritten to include M2 work (intro, roam, sprites, exit, mobile, collision, 3D); added Changelog rule to Workflow section.
 - 2026-04-21 01:15 — Created this file (`changelog.md`) at repo root and seeded with the backlog above.
 - 2026-04-21 01:20 — End-of-day summary to Kuroi: nothing committed, Case 01 content unchanged, debug flag off by default, Priya's head grazes reception desk edge (flagged for per-scene tuning later), auto-append rule now live.
+- 2026-04-23 — Added `lottiefiles-creator` MCP server to `.mcp.json` (`cmd /c npx -y @lottiefiles/creator-mcp@latest`). Restart session to activate.
+- 2026-04-23 — Verified Supabase MCP: tools registered and reachable, but all calls return Unauthorized. Root cause: `.mcp.json` references `${SUPABASE_PROJECT_REF}` / `${SUPABASE_ACCESS_TOKEN}` and neither env var is set in the launching shell (no .env in repo). Fix: set both in Windows user env or PowerShell before `claude`.
