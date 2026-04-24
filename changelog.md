@@ -40,3 +40,6 @@ Rule (see CLAUDE.md → Workflow → Changelog): every assistant response append
 - 2026-04-21 01:20 — End-of-day summary to Kuroi: nothing committed, Case 01 content unchanged, debug flag off by default, Priya's head grazes reception desk edge (flagged for per-scene tuning later), auto-append rule now live.
 - 2026-04-23 — Added `lottiefiles-creator` MCP server to `.mcp.json` (`cmd /c npx -y @lottiefiles/creator-mcp@latest`). Restart session to activate.
 - 2026-04-23 — Verified Supabase MCP: tools registered and reachable, but all calls return Unauthorized. Root cause: `.mcp.json` references `${SUPABASE_PROJECT_REF}` / `${SUPABASE_ACCESS_TOKEN}` and neither env var is set in the launching shell (no .env in repo). Fix: set both in Windows user env or PowerShell before `claude`.
+- 2026-04-23 — Supabase MCP re-checked and now authorized. Project URL `gthsqksuujywpyxxxazu.supabase.co`, migration `20260419161958_init_m1_schema` applied, 6 tables live (cases 2, players 20, sessions 24, session_choices 50, clusters 2, session_snippets 34), RLS enabled on all.
+- 2026-04-23 23:04 — User interrupted less-permission-prompts skill before any changes were made; no files modified
+- 2026-04-23 23:05 — MCP status check: supabase, playwright, lottiefiles-creator all connected
